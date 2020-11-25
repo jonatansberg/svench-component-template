@@ -6,6 +6,7 @@ import del from 'rollup-plugin-delete'
 import postcss from 'rollup-plugin-postcss-hot'
 import typescript from '@rollup/plugin-typescript'
 import { plugin as Svench } from 'svench/rollup'
+import { typescript as preprocessTypescript } from 'svelte-preprocess';
 
 import pkg from './package.json'
 
@@ -81,7 +82,10 @@ const configs = {
         // Svench's "combined" preprocessor wraps both Mdsvex preprocessors
         // (configured for Svench), and its own preprocessor (for static
         // analysis -- eg extract source from views)
-        preprocess: svench.$.preprocess,
+        preprocess: [
+          preprocessTypescript(),
+          svench.$.preprocess
+        ],
         hot: HOT && {
           optimistic: true,
           noPreserveState: false,
