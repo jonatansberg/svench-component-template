@@ -4,6 +4,7 @@ import resolve from '@rollup/plugin-node-resolve'
 import hmr from 'rollup-plugin-hot'
 import del from 'rollup-plugin-delete'
 import postcss from 'rollup-plugin-postcss-hot'
+import typescript from '@rollup/plugin-typescript'
 import { plugin as Svench } from 'svench/rollup'
 
 import pkg from './package.json'
@@ -88,6 +89,11 @@ const configs = {
       }),
 
       resolve({ browser: true }),
+
+      typescript({
+        sourceMap: !PRODUCTION,
+        include: "./src/**/*.ts"
+      }),
 
       HOT &&
         hmr({
